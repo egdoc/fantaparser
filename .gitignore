@@ -1,0 +1,9 @@
+.idea
+.venv
+Fantaparser.egg-info
+__pycache__
+build
+dist
+uv.lock
+/*.csv
+/*.json

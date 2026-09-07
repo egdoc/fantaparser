@@ -1,0 +1,14 @@
+[project]
+name = 'Fantaparser'
+description = "Parse fantacalcio.it grades and quotations"
+authors = [{name = "Egidio Docile"}]
+version = "0.1.0"
+license = "GPL-3.0-or-later"
+keywords = ["fantacalcio.it", "fantagazzetta", "voti", "quotazioni"]
+dependencies = ['bs4', 'pandas']
+
+[project.scripts]
+fantaparser = "fantaparser:main"
+
+[tool.setuptools]
+package-data = {"fantaparser"=["data/parsemap.json"]}

@@ -1,0 +1,158 @@
+{
+  "grades": {
+    "base_url": "https://fantacalcio.it/voti-fantacalcio-serie-a",
+    "container": {
+      "selector": "table.grades-table tbody > tr:not(:last-child)"
+    },
+    "fields": {
+      "codice": {
+        "selector": "a.player-name",
+        "extract": "href",
+        "extract_regex": ".*/([0-9]+)(/{season})*$",
+        "data_type": "uint"
+      },
+      "nome": {
+        "selector": "a.player-name > span",
+        "extract": "text"
+      },
+      "ruolo": {
+        "selector": "span.role",
+        "extract": "data-value",
+        "transform_functions": [
+          "translate_role"
+        ],
+        "data_type": "uint"
+      },
+      "club": {
+        "selector": "a.player-name",
+        "extract": "href",
+        "extract_regex": "/squadre/([a-zA-Z]+)/.*$"
+      },
+      "giornata": {
+        "value": "{matchday}",
+        "data_type": "uint"
+      },
+      "presenza": {
+        "value": 1,
+        "data_type": "UInt64"
+      },
+      "voto_giornale": {
+        "selector": "span.player-grade ",
+        "extract": "data-value",
+        "transform_functions": [
+          "translate_office_grade",
+          "float_comma"
+        ],
+        "data_type": "float"
+      },
+      "voto_fc": {
+        "selector": "span.player-fanta-grade",
+        "extract": "data-value",
+        "transform_functions": [
+          "translate_office_grade",
+          "float_comma"
+        ],
+        "data_type": "float"
+      },
+      "gol_segnati": {
+        "selector": "span.player-bonus[title=\"Gol segnati\"]",
+        "extract": "data-value",
+        "data_type": "UInt64"
+      },
+      "gol_subiti": {
+        "selector": "span.player-bonus[title=\"Gol subiti\"]",
+        "extract": "data-value",
+        "data_type": "UInt64"
+      },
+      "autogol": {
+        "selector": "span.player-bonus[title=\"Autoreti\"]",
+        "extract": "data-value",
+        "data_type": "UInt64"
+      },
+      "rigore_segnato": {
+        "selector": "span.player-bonus[title=\"Rigori segnati\"]",
+        "extract": "data-value",
+        "data_type": "UInt64"
+      },
+      "rigore_sbagliato": {
+        "selector": "span.player-bonus[title=\"Rigori sbagliati\"]",
+        "extract": "data-value",
+        "data_type": "UInt64"
+      },
+      "rigore_parato": {
+        "selector": "span.player-bonus[title=\"Rigori parati\"]",
+        "extract": "data-value",
+        "data_type": "UInt64"
+      },
+      "assists": {
+        "selector": "span.player-bonus[title=\"Assist\"]",
+        "extract": "data-value",
+        "data_type": "UInt64"
+      },
+      "entrato_a_partita_iniziata": {
+        "selector": "img[title=\"Subentrato\"]",
+        "data_type": "UInt64"
+      },
+      "sostituito": {
+        "selector": "img[title=\"Sostituito\"]",
+        "data_type": "UInt64"
+      },
+      "titolare": {
+        "selector": "img[title=\"Subentrato\"]",
+        "invert": true,
+        "data_type": "UInt64"
+      },
+      "ammonizione": {
+        "selector": "span.player-grade.yellow-card",
+        "data_type": "UInt64"
+      },
+      "espulsione": {
+        "selector": "span.player-grade.red-card",
+        "data_type": "UInt64"
+      }
+    }
+  },
+  "quotations": {
+    "base_url": "https://fantacalcio.it/quotazioni-fantacalcio",
+    "container": {
+      "selector": "tr.player-row"
+    },
+    "fields": {
+      "codice": {
+        "selector": "a.player-name",
+        "extract": "href",
+        "extract_regex": ".*/([0-9]+)(/{season})*$",
+        "data_type": "uint"
+      },
+      "nome": {
+        "selector": "a.player-name > span",
+        "extract": "text"
+      },
+      "ruolo": {
+        "selector": "th.player-role-classic > span.role",
+        "extract": "data-value",
+        "transform_functions": [
+          "translate_role"
+        ],
+        "data_type": "uint"
+      },
+      "attivo": {
+        "selector": "span.out-of-game",
+        "data_type": "uint",
+        "invert": true
+      },
+      "quotazione": {
+        "selector": "td.player-classic-current-price",
+        "extract": "text",
+        "replace_regex": "[\n ]+",
+        "replace_value": "",
+        "data_type": "uint"
+      },
+      "club": {
+        "selector": "a.player-name",
+        "extract": "href",
+        "extract_regex": "serie-a/squadre/([a-z]+)/"
+      }
+    }
+  }
+}
